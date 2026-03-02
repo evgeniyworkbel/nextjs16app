@@ -1,0 +1,44 @@
+services:
+  web:
+    image: evgeniyworkbel/nextjs16app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=${POSTGRES_URL}
+      - PAYLOAD_SECRET=${PAYLOAD_SECRET}
+      - IS_CUSTOM_VPS=${IS_CUSTOM_VPS}
+      - NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID=${NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - my_network
+
+  db:
+    image: postgres:18.1-alpine3.23
+    restart: unless-stopped
+    shm_size: 128mb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DATABASE}"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - my_network
+
+volumes:
+  pgdata:
+
+networks:
+  my_network:
+    name: my_network
+    driver: bridge
