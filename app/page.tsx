@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ClientComp } from "./client-comp";
 
 export default function Home() {
   console.group("envs at server");
@@ -41,7 +42,7 @@ export default function Home() {
             center.
           </p>
         </div>
-
+        <ClientComp />
       </main>
     </div>
   );
