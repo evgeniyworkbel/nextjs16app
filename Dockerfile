@@ -19,7 +19,7 @@ COPY . .
 # https://github.com/vercel/next.js/discussions/14030
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker-compose/next-app/prod.Dockerfile
 ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID
-ENV ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID=${ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID}
+ENV ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID=${NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID}
 # RUN corepack enable pnpm && pnpm run build:compile && pnpm run build:generateEnv;
 # RUN corepack enable pnpm && pnpm run build:compile && pnpm run build:generate;
 RUN corepack enable pnpm && pnpm run build;
@@ -44,6 +44,6 @@ ENV HOSTNAME="0.0.0.0"
 # Environment variables must be redefined at run time
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker-compose/next-app/prod.Dockerfile
 ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID
-ENV ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID=${ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID}
+ENV ARG NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID=${NEXT_PUBLIC_YANDEX_METRIKA_COUNTER_ID}
 
 CMD ["node", "server.js"]
